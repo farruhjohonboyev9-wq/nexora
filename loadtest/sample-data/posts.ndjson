@@ -1,0 +1,10 @@
+{"index":{"_id":"p_1"}}
+{"authorId":"u_ali","content":"Building scalable chat backend with Spring Boot and Elasticsearch","hashtags":["backend","spring","chat"],"popularity":120,"createdAt":"2026-03-25T10:00:00Z"}
+{"index":{"_id":"p_2"}}
+{"authorId":"u_dilnoza","content":"Nexora feed ranking improvements and microservice tuning","hashtags":["nexora","feed","microservice"],"popularity":210,"createdAt":"2026-03-26T09:30:00Z"}
+{"index":{"_id":"p_3"}}
+{"authorId":"u_javlon","content":"How to optimize Elasticsearch query latency for post search","hashtags":["elasticsearch","search","performance"],"popularity":340,"createdAt":"2026-03-28T18:10:00Z"}
+{"index":{"_id":"p_4"}}
+{"authorId":"u_umar","content":"Java and Spring tips for resilient API design","hashtags":["java","spring","api"],"popularity":95,"createdAt":"2026-03-29T14:20:00Z"}
+{"index":{"_id":"p_5"}}
+{"authorId":"u_sardor","content":"Realtime messaging architecture for large chat rooms","hashtags":["realtime","chat","architecture"],"popularity":180,"createdAt":"2026-03-30T07:45:00Z"}

@@ -1,0 +1,76 @@
+services:
+  search-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nexora-search-service
+    restart: unless-stopped
+    ports:
+      - "5020:5020"
+    environment:
+      ELASTICSEARCH_URIS: http://elasticsearch:9200
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/nexora_auth_dev
+      POSTGRES_USER: nexora
+      POSTGRES_PASSWORD: nexora_pass
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.2
+    container_name: nexora-elasticsearch
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: nexora-search-redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  postgres:
+    image: postgres:16
+    container_name: nexora-search-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nexora_auth_dev
+      POSTGRES_USER: nexora
+      POSTGRES_PASSWORD: nexora_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexora -d nexora_auth_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  elasticsearch_data:
+  postgres_data:

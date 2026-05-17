@@ -1,0 +1,32 @@
+{
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 1,
+    "analysis": {
+      "normalizer": {
+        "lowercase": {
+          "type": "custom",
+          "filter": ["lowercase", "asciifolding"]
+        }
+      },
+      "analyzer": {
+        "tag_search": {
+          "tokenizer": "keyword",
+          "filter": ["lowercase", "asciifolding"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "tag": {
+        "type": "keyword",
+        "normalizer": "lowercase"
+      },
+      "usageCount": {
+        "type": "long"
+      }
+    }
+  }
+}
